@@ -4,8 +4,8 @@
     <div class="row justify-center">
       <div class="col-12 col-md-8">
         <q-card>
-          <q-card-section class="bg-primary text-write">
-            <div class="text-h6">Calculadora</div>
+          <q-card-section class="bg-primary">
+            <div class="text-white text-h6">Calculadora</div>
           </q-card-section>
           <q-card-section>
             <div class="text-h5 text-grey-5 text-right">
@@ -16,7 +16,13 @@
           <q-card-section class="bg-grey-4">
             <div class="row q-col-gutter-sm">
               <div class="col-3">
-                <q-btn> 1 </q-btn>
+                <q-btn class="full-width text-h6"> 1 </q-btn>
+              </div>
+              <div class="col-6">
+                <q-btn class="full-width text-h6" color="indigo"> CE </q-btn>
+              </div>
+              <div class="col-6">
+                <q-btn class="full-width text-h6" color="orange"> = </q-btn>
               </div>
             </div>
           </q-card-section>
