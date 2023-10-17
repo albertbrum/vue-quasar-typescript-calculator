@@ -1,4 +1,6 @@
 {
   "singleQuote": true,
-  "semi": true
+  "semi": true,
+  "singleAttributePerLine": true,
+  "tabWidth": 2
 }

@@ -7,6 +7,7 @@ module.exports = {
   // https://eslint.vuejs.org/user-guide/#how-to-use-a-custom-parser
   // Must use parserOptions instead of "parser" to allow vue-eslint-parser to keep working
   // `parser: 'vue-eslint-parser'` is already included with any 'plugin:vue/**' config and should be omitted
+
   parserOptions: {
     parser: require.resolve('@typescript-eslint/parser'),
     extraFileExtensions: ['.vue'],
@@ -70,7 +71,19 @@ module.exports = {
   rules: {
     'prefer-promise-reject-errors': 'off',
 
-    quotes: ['warn', 'single', { avoidEscape: true }],
+    quotes: ['warn', 'single', { avoidEscape: false }],
+
+    'brace-style': [2, 'stroustrup', { 'allowSingleLine': true }],
+
+    'vue/max-attributes-per-line': 1,
+    'vue/valid-v-for': 1,
+
+    // allow async-await
+    'generator-star-spacing': 'off',
+    'vue/max-attributes-per-line': 0,
+    'vue/valid-v-for': 0,
+    'arrow-parens': 0,
+    'one-var': 0,
 
     // this rule, if on, would require explicit return type on the `render` function
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -83,6 +96,6 @@ module.exports = {
     'no-unused-vars': 'off',
 
     // allow debugger during development only
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   },
 };
