@@ -5,7 +5,7 @@
         <q-card>
           <q-card-section class="bg-primary">
             <div class="text-white text-h6">Calculadora</div>
-            <q-icon icon="history" class="bg-secondary"></q-icon>
+            <q-icon v-for="size in ['xs', 'sm', 'md', 'lg', 'xl']" :key="size" :size="size" name="history" />
           </q-card-section>
           <q-card-section>
             <div class="text-h5 text-grey-5 text-right">
@@ -125,7 +125,7 @@ const btnClearDisplay = () => {
 const btnResult = () => {
   if (!operatorEntry) {
     displayResult.value = evaluate(numericExpression.value + displaySentenceNumber.value)
-    historyResults.push(`${numericExpression.value} + ${displaySentenceNumber.value}`)
+    //historyResults.push(`${numericExpression.value} + ${displaySentenceNumber.value}`)
   }
   else {
     displayResult.value = 'Error!'
