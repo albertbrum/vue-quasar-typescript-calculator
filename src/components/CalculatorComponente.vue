@@ -8,7 +8,7 @@
           </q-card-section>
           <q-card-section>
             <div class="text-h5 text-grey-5 text-right">
-              {{ numericExpression + lastDisplayNumber }}
+              {{ numericExpression + displaySentenceNumber }}
             </div>
             <div class="text-h3 text-right"> {{ displayResult }} </div>
           </q-card-section>
@@ -63,62 +63,68 @@ const buttons: (number | string)[] = [
   '*',
 ]
 
-type numberOrOperator = number | string
-type lastDisplayNumber = number | string
-type notIsNumber = number | string
+type numberOrOperator = (number | string)
+type lastDisplayEntry = (number | string)
+type displaySentenceNumber = (number | string)
 type numericExpression = (number | string)
 type displayResult = (number | string)
+type operatorEntry = (boolean)
 
 const numericExpression = ref('')
-const lastDisplayNumber = ref('')
+const displaySentenceNumber = ref('')
 const displayResult = ref('0')
+const lastDisplayEntry = ref('')
+let operatorEntry = true
 
-const notIsNumber = (value: numberOrOperator): boolean =>
-  isNaN(Number(value))
+const notIsNumber = (value: numberOrOperator): boolean => isNaN(Number(value))
 
 const btnAction = (value: numberOrOperator) => {
   if (!notIsNumber(value)) {
-    lastDisplayNumber.value = `${lastDisplayNumber.value}${value}`
-    console.log(lastDisplayNumber.value)
+    if (operatorEntry) {
+      displaySentenceNumber.value = ''
+      operatorEntry = false
+    }
+    displaySentenceNumber.value = `${displaySentenceNumber.value}${value}`
   }
   else {
-    performOperation(value)
+    addOperation(value)
   }
 }
 
-const performOperation = (value: numberOrOperator) => {
-  console.log(value)
+const addOperation = (value: numberOrOperator) => {
   if (value === ',') {
-    console.log(lastDisplayNumber.value.indexOf(','))
-    if (lastDisplayNumber.value.indexOf(',') === -1) {
-      console.log(lastDisplayNumber.value)
-      lastDisplayNumber.value = `${lastDisplayNumber.value}${value}`
+    if (displaySentenceNumber.value.indexOf(',') === -1) {
+      displaySentenceNumber.value = `${displaySentenceNumber.value}${value}`
     }
+    return
   }
   if (value === '%') {
-    if (lastDisplayNumber.value !== '') {
-      lastDisplayNumber.value = `${parseFloat(lastDisplayNumber.value) / 100}`
+    if (displaySentenceNumber.value !== '') {
+      displaySentenceNumber.value = `${parseFloat(displaySentenceNumber.value) / 100}`
     }
+    return
   }
-
   addOperator(value)
 }
 
+const addOperator = (value: numberOrOperator) => {
+  if (!operatorEntry) {
+    numericExpression.value += `${displaySentenceNumber.value} ${value} `
+    lastDisplayEntry.value = `${value}`
+    displaySentenceNumber.value = ''
+    operatorEntry = true
+  }
+}
+
 const btnClearDisplay = () => {
-  lastDisplayNumber.value = ''
+  displaySentenceNumber.value = ''
   numericExpression.value = ''
   displayResult.value = '0'
 }
 
-const addOperator = (value: numberOrOperator) => {
-  numericExpression.value += `${lastDisplayNumber.value} ${value} `
-  lastDisplayNumber.value = ''
-}
-
 const btnResult = () => {
-  displayResult.value = evaluate(numericExpression.value + lastDisplayNumber.value)
+  displayResult.value = evaluate(numericExpression.value + displaySentenceNumber.value)
 }
-
 
 </script>
 
