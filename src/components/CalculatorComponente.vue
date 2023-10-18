@@ -5,6 +5,7 @@
         <q-card>
           <q-card-section class="bg-primary">
             <div class="text-white text-h6">Calculadora</div>
+            <q-icon icon="history" class="bg-secondary"></q-icon>
           </q-card-section>
           <q-card-section>
             <div class="text-h5 text-grey-5 text-right">
@@ -64,16 +65,16 @@ const buttons: (number | string)[] = [
 ]
 
 type numberOrOperator = (number | string)
-type lastDisplayEntry = (number | string)
 type displaySentenceNumber = (number | string)
 type numericExpression = (number | string)
 type displayResult = (number | string)
 type operatorEntry = (boolean)
+type historyResults = (string | number)
 
 const numericExpression = ref('')
 const displaySentenceNumber = ref('')
 const displayResult = ref('0')
-const lastDisplayEntry = ref('')
+const historyResults = ref('')
 let operatorEntry = true
 
 const notIsNumber = (value: numberOrOperator): boolean => isNaN(Number(value))
@@ -110,7 +111,6 @@ const addOperation = (value: numberOrOperator) => {
 const addOperator = (value: numberOrOperator) => {
   if (!operatorEntry) {
     numericExpression.value += `${displaySentenceNumber.value} ${value} `
-    lastDisplayEntry.value = `${value}`
     displaySentenceNumber.value = ''
     operatorEntry = true
   }
@@ -123,7 +123,14 @@ const btnClearDisplay = () => {
 }
 
 const btnResult = () => {
-  displayResult.value = evaluate(numericExpression.value + displaySentenceNumber.value)
+  if (!operatorEntry) {
+    displayResult.value = evaluate(numericExpression.value + displaySentenceNumber.value)
+    historyResults.push(`${numericExpression.value} + ${displaySentenceNumber.value}`)
+  }
+  else {
+    displayResult.value = 'Error!'
+  }
+
 }
 
 </script>
