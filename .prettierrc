@@ -1,6 +1,16 @@
 {
+  "brace-style": 2,
+  "semi": false,
+  "trailingComma": "all",
   "singleQuote": true,
-  "semi": true,
+  "printWidth": 140,
+  "tabWidth": 2,
+  "useTabs": false,
+  "arrowParens": "avoid",
+  "quoteProps": "as-needed",
+  "bracketSpacing": true,
+  "proseWrap": "always",
+  "endOfLine": "lf",
   "singleAttributePerLine": true,
-  "tabWidth": 2
+  "prettierPath": "./node_modules/prettier"
 }

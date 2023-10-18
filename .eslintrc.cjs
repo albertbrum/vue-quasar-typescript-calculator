@@ -71,9 +71,12 @@ module.exports = {
   rules: {
     'prefer-promise-reject-errors': 'off',
 
-    quotes: ['warn', 'single', { avoidEscape: false }],
+    'quotes': ['warn', 'single', { avoidEscape: false }],
 
+    'curly': 2,
+    //'brace-style': ['error', '1tbs', { allowSingleLine: true }],
     'brace-style': [2, 'stroustrup', { 'allowSingleLine': true }],
+    'indent': ['error', 2, { 'SwitchCase': 1 }],
 
     'vue/max-attributes-per-line': 1,
     'vue/valid-v-for': 1,
