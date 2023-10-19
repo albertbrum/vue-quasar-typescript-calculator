@@ -4,11 +4,25 @@
       <div class="col-12 col-md-8 col-lg-6 col-xl-3">
         <q-card>
           <q-card-section class="bg-primary">
-            <div class="text-white text-h6">Calculadora</div>
-            <q-icon v-for="size in ['xs', 'sm', 'md', 'lg', 'xl']" :key="size" :size="size" name="history" />
+            <div class="row text-right">
+              <div class="col text-white text-h5 text-left">Calculadora</div>
+              <div class="text-white text-h6">
+                <div class="q-pa-xs" style="max-width: 250px,
+                  max-heigth: 100px">
+                  <q-expansion-item icon="history" label="Histórico" header-class="bg-orange text-white"
+                    expand-icon-class="text-white">
+                    <q-card class="bg-grey-2 text-indigo">
+                      <q-card-section>
+                        <pre>{{ historyResults }}</pre>
+                      </q-card-section>
+                    </q-card>
+                  </q-expansion-item>
+                </div>
+              </div>
+            </div>
           </q-card-section>
           <q-card-section>
-            <div class="text-h5 text-grey-5 text-right">
+            <div class="text-h5 text-grey-6 text-right">
               {{ numericExpression + displaySentenceNumber }}
             </div>
             <div class="text-h3 text-right"> {{ displayResult }} </div>
@@ -35,6 +49,7 @@
             </div>
           </q-card-section>
         </q-card>
+
       </div>
     </div>
   </div>
@@ -45,37 +60,20 @@
 import { ref } from 'vue'
 import { evaluate } from 'mathjs'
 
-const buttons: (number | string)[] = [
-  7,
-  8,
-  9,
-  '%',
-  4,
-  5,
-  6,
-  '+',
-  1,
-  2,
-  3,
-  '-',
-  ',',
-  0,
-  '/',
-  '*',
-]
+const buttons: (number | string)[] = [7, 8, 9, '%', 4, 5, 6, '+', 1, 2, 3, '-', '.', 0, '/', '*',]
 
 type numberOrOperator = (number | string)
 type displaySentenceNumber = (number | string)
 type numericExpression = (number | string)
-type displayResult = (number | string)
+type displayResult = string
 type operatorEntry = (boolean)
-type historyResults = (string | number)
+type historyResults = string
 
 const numericExpression = ref('')
 const displaySentenceNumber = ref('')
 const displayResult = ref('0')
-const historyResults = ref('')
 let operatorEntry = true
+const historyResults = ref([''])
 
 const notIsNumber = (value: numberOrOperator): boolean => isNaN(Number(value))
 
@@ -93,8 +91,8 @@ const btnAction = (value: numberOrOperator) => {
 }
 
 const addOperation = (value: numberOrOperator) => {
-  if (value === ',') {
-    if (displaySentenceNumber.value.indexOf(',') === -1) {
+  if (value === '.') {
+    if (displaySentenceNumber.value.indexOf('.') === -1) {
       displaySentenceNumber.value = `${displaySentenceNumber.value}${value}`
     }
     return
@@ -120,17 +118,17 @@ const btnClearDisplay = () => {
   displaySentenceNumber.value = ''
   numericExpression.value = ''
   displayResult.value = '0'
+  operatorEntry = true
 }
 
 const btnResult = () => {
   if (!operatorEntry) {
     displayResult.value = evaluate(numericExpression.value + displaySentenceNumber.value)
-    //historyResults.push(`${numericExpression.value} + ${displaySentenceNumber.value}`)
+    historyResults.value.push(`${numericExpression.value} ${displaySentenceNumber.value} = ${displayResult.value}`)
   }
   else {
     displayResult.value = 'Error!'
   }
-
 }
 
 </script>
@@ -142,5 +140,12 @@ const btnResult = () => {
 
 .text-h3 {
   height: 50px;
+}
+
+.row-title {
+  padding: 5px;
+  margin: 10px;
+  font-size: 20px;
+
 }
 </style>

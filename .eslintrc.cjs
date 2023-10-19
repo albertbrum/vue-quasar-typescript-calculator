@@ -70,23 +70,29 @@ module.exports = {
   // add your custom rules here
   rules: {
     'prefer-promise-reject-errors': 'off',
-
-    'quotes': ['warn', 'single', { avoidEscape: false }],
-
-    'curly': 2,
+    quotes: ['warn', 'single', { avoidEscape: false }],
+    curly: [2, 'all'],
     //'brace-style': ['error', '1tbs', { allowSingleLine: true }],
-    'brace-style': [2, 'stroustrup', { 'allowSingleLine': true }],
-    'indent': ['error', 2, { 'SwitchCase': 1 }],
-
-    'vue/max-attributes-per-line': 1,
-    'vue/valid-v-for': 1,
-
+    'brace-style': [2, 'stroustrup', { allowSingleLine: true }],
+    // 'multiline-ternary': ['error', 'always-multiline'],
+    //'multiline-atributes': ['error', { allowSingleLine: true }],
+    //'multiline-attributes': [1, { allowSingleLine: false }],
+    //'vue/max-attributes-per-line': 1,
+    //'vue/valid-v-for': [2],
     // allow async-await
+    'vue/first-attribute-linebreak': [
+      'off',
+      {
+        singleline: 'below',
+        multiline: 'below',
+      },
+    ],
+
     'generator-star-spacing': 'off',
-    'vue/max-attributes-per-line': 0,
-    'vue/valid-v-for': 0,
-    'arrow-parens': 0,
-    'one-var': 0,
+    //'vue/max-attributes-per-line': 0,
+    //'vue/valid-v-for': 0,
+    'arrow-parens': 'off',
+    'one-var': 'off',
 
     // this rule, if on, would require explicit return type on the `render` function
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -99,6 +105,6 @@ module.exports = {
     'no-unused-vars': 'off',
 
     // allow debugger during development only
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
   },
 };

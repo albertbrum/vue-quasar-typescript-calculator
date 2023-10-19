@@ -1,16 +1,18 @@
 {
   "brace-style": 2,
-  "semi": false,
   "trailingComma": "all",
   "singleQuote": true,
   "printWidth": 140,
   "tabWidth": 2,
   "useTabs": false,
-  "arrowParens": "avoid",
+  "arrowParens": "always",
   "quoteProps": "as-needed",
   "bracketSpacing": true,
   "proseWrap": "always",
-  "endOfLine": "lf",
-  "singleAttributePerLine": true,
-  "prettierPath": "./node_modules/prettier"
+  "vueIndentScriptAndStyle": true,
+  "indent": 2,
+  "array-bracket-newline": "consistent",
+  "semi": true,
+  "jsxSingleQuote": true,
+  "jsxBracketSameLine": false
 }
