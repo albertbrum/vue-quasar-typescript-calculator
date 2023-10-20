@@ -72,18 +72,11 @@ module.exports = {
     'prefer-promise-reject-errors': 'off',
     quotes: ['warn', 'single', { avoidEscape: false }],
     curly: [2, 'all'],
-    //'brace-style': ['error', '1tbs', { allowSingleLine: true }],
     'brace-style': [2, 'stroustrup', { allowSingleLine: true }],
-    // 'multiline-ternary': ['error', 'always-multiline'],
-    //'multiline-atributes': ['error', { allowSingleLine: true }],
-    //'multiline-attributes': [1, { allowSingleLine: false }],
-    //'vue/max-attributes-per-line': 1,
-    //'vue/valid-v-for': [2],
-    // allow async-await
     'vue/first-attribute-linebreak': [
       'off',
       {
-        singleline: 'below',
+        singleline: 'ignore',
         multiline: 'below',
       },
     ],

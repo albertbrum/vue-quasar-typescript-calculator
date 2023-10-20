@@ -2,5 +2,21 @@
   "extends": "@quasar/app-vite/tsconfig-preset",
   "compilerOptions": {
     "baseUrl": "."
+  },
+  "editor.tabSize": 2,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.fixAll.eslint": true,
+    "source.organizeImports": false
+  },
+
+  "css.validate": false,
+  "scss.validate": false,
+
+  "eslint.validate": ["vue", "javascript", "typescript", "html"],
+
+  "[vue, html, javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

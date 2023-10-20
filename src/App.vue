@@ -1,7 +1,7 @@
 <template>
-  <div class="q-page">
-    <div class="row heigth='100%' width='100%' justify-center">
-      <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 col-xl-3">
+  <div>
+    <div class="row justify-center">
+      <div class="col-xs-12 col-sm-8 col-md-5 col-lg-4 col-xl-3">
         <q-card>
           <q-card-section class="bg-primary">
             <div class="row justify-center items-center">
@@ -10,11 +10,13 @@
                 <q-expansion-item icon="history" label="Histórico" le header-class="bg-indigo-8 text-white"
                   expand-icon-class="text-white">
                   <q-card class="bg-grey-2 text-indigo">
-                    <q-card-section v-for="(displayResultTxt, index) in historyResults" :key="index">
-                      <displayResultTxt v-if="historyResults.length === 1 || index !== 0">
-                        {{ historyResults[index] }}
-                      </displayResultTxt>
-                    </q-card-section>
+                    <q-scroll-area visible style="height: 100px; max-width: 300px;">
+                      <q-card-section v-for="(displayResultTxt, index) in historyResults" :key="index">
+                        <displayResultTxt v-if="historyResults.length === 1 || index !== 0">
+                          {{ historyResults[index] }}
+                        </displayResultTxt>
+                      </q-card-section>
+                    </q-scroll-area>
                   </q-card>
                 </q-expansion-item>
               </div>
@@ -56,20 +58,20 @@
 
 import { ref } from 'vue'
 import { evaluate } from 'mathjs'
+import class checkerInputBtn from './utils/checkersInput'
+import { inputBtn } from "./utils/inputBtnOperatorOrNumber";
 
 const buttons = [7, 8, 9, '%', 4, 5, 6, '+', 1, 2, 3, '-', '.', 0, '/', '*',]
 
 // utils
-type numberOrOperator = (number | string)
-const notIsNumber = (value: numberOrOperator): boolean => isNaN(Number(value))
 
-type operatorInputFlag = (boolean)
-let operatorInputFlag = true
-
+const inputBtn = ""
+const checkerInputBtn = new checkerInputBtn()
 
 // variavel de junçao de string da expressao
 type numericExpression = (number | string)
 const numericExpression = ref('')
+const inputBtn = (number | string)
 
 
 // variaveis de exibicao de display
@@ -81,7 +83,7 @@ const displayResult = ref('0')
 const historyResults = ref(['sem historico'])
 
 
-const btnAction = (value: numberOrOperator) => {
+const btnAction = (inputBtn) => {
   if (!notIsNumber(value)) {
     if (operatorInputFlag) {
       displaySentenceNumber.value = ''
@@ -105,13 +107,15 @@ const btnResult = () => {
   if (!operatorInputFlag) {
     displayResult.value = evaluate(numericExpression.value + displaySentenceNumber.value)
     historyResults.value.push(`${numericExpression.value} ${displaySentenceNumber.value} = ${displayResult.value}`)
+    numericExpression.value = ''
+    displaySentenceNumber.value = ''
   }
   else {
     displayResult.value = 'Error!'
   }
 }
 
-const addOperation = (value: numberOrOperator) => {
+const addOperation = (value: inputBtn) => {
   if (value === '.') {
     if (displaySentenceNumber.value.indexOf('.') === -1) {
       displaySentenceNumber.value = `${displaySentenceNumber.value}${value}`
@@ -127,7 +131,7 @@ const addOperation = (value: numberOrOperator) => {
   addOperator(value)
 }
 
-const addOperator = (value: numberOrOperator) => {
+const addOperator = (value: inputBtn) => {
   if (!operatorInputFlag) {
     numericExpression.value += `${displaySentenceNumber.value} ${value} `
     displaySentenceNumber.value = ''
@@ -137,7 +141,7 @@ const addOperator = (value: numberOrOperator) => {
 
 </script>
 
-<style>
+<style >
 .text-h5 {
   height: 23px;
 }
