@@ -1,6 +1,5 @@
-import { inputBtn } from './inputBtnOperatorOrNumber';
-export class checkerInputBtn {
-  notIsNumber(inputBtn) {
+export class CheckerInputBtn {
+  public notIsNumber(inputBtn: string | number): boolean {
     return isNaN(Number(inputBtn));
   }
 }

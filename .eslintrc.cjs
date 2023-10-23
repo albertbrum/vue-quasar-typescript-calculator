@@ -72,7 +72,7 @@ module.exports = {
     'prefer-promise-reject-errors': 'off',
     quotes: ['warn', 'single', { avoidEscape: false }],
     curly: [2, 'all'],
-    'brace-style': [2, 'stroustrup', { allowSingleLine: true }],
+    //'brace-style': [2, 'stroustrup', { allowSingleLine: true }],
     'vue/first-attribute-linebreak': [
       'off',
       {

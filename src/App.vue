@@ -7,14 +7,14 @@
             <div class="row justify-center items-center">
               <div class="col text-white text-h6"> Calculadora </div>
               <div class="col text-white">
-                <q-expansion-item icon="history" label="Histórico" le header-class="bg-indigo-8 text-white"
+                <q-expansion-item icon="history" label="Histórico" header-class="bg-indigo-8 text-white"
                   expand-icon-class="text-white">
                   <q-card class="bg-grey-2 text-indigo">
                     <q-scroll-area visible style="height: 100px; max-width: 300px;">
-                      <q-card-section v-for="(displayResultTxt, index) in historyResults" :key="index">
-                        <displayResultTxt v-if="historyResults.length === 1 || index !== 0">
+                      <q-card-section v-for="(div, index) in historyResults" :key="index">
+                        <div v-if="historyResults.length === 1 || index !== 0">
                           {{ historyResults[index] }}
-                        </displayResultTxt>
+                        </div>
                       </q-card-section>
                     </q-scroll-area>
                   </q-card>
@@ -30,9 +30,9 @@
           </q-card-section>
           <q-card-section class="bg-grey-4">
             <div class="row q-col-gutter-sm">
-              <div class="col-3" v-for="(btn, index) in buttons" :key="index">
-                <q-btn class="full-width text-h6" :color="notIsNumber(btn) ? 'indigo' : 'grey-2'"
-                  :text-color="notIsNumber(btn) ? 'white' : 'grey-8'" @click="btnAction(btn)">
+              <div class="col-3" v-for="(btn, index) in enumBtnKeysCalc" :key="index">
+                <q-btn class="full-width text-h6" :color="checkerInput.notIsNumber(btn) ? 'indigo' : 'grey-2'"
+                  :text-color="checkerInput.notIsNumber(btn) ? 'white' : 'grey-8'" @click="btnKeyinput(btn)">
                   {{ btn }}
                 </q-btn>
               </div>
@@ -58,41 +58,50 @@
 
 import { ref } from 'vue'
 import { evaluate } from 'mathjs'
-import class checkerInputBtn from './utils/checkersInput'
-import { inputBtn } from "./utils/inputBtnOperatorOrNumber";
-
-const buttons = [7, 8, 9, '%', 4, 5, 6, '+', 1, 2, 3, '-', '.', 0, '/', '*',]
-
-// utils
-
-const inputBtn = ""
-const checkerInputBtn = new checkerInputBtn()
+import enumBtnKeysCalc from './utils/enumBtnKeysCalc'
+import { CheckerInputBtn } from './utils/checkersInput'
 
 // variavel de junçao de string da expressao
 type numericExpression = (number | string)
 const numericExpression = ref('')
-const inputBtn = (number | string)
 
+// variavel de entrada das keys da calculadora
+type inputBtn = (number | string)
+const inputBtn = ('')
 
 // variaveis de exibicao de display
+
 type displaySentenceNumber = (number | string)
 type displayResult = string
 type historyResults = string
+
+// type notIsNumber = boolean
+
+type operatorInputFlag = boolean
+let operatorInputFlag = false
+
+// metodos e classes
+type checkerInput = string
+
+const checkerInput = new CheckerInputBtn();
 const displaySentenceNumber = ref('')
 const displayResult = ref('0')
 const historyResults = ref(['sem historico'])
 
+//const notIsNumber = {checkerInput.notIsNumber(inputBtn)}
 
-const btnAction = (inputBtn) => {
-  if (!notIsNumber(value)) {
+//const notIsNumber = (inputBtn: inputBtn) => isNaN(Number(inputBtn))
+
+const btnKeyinput = (inputBtn: inputBtn) => {
+  if (!checkerInput.notIsNumber(inputBtn)) {
     if (operatorInputFlag) {
       displaySentenceNumber.value = ''
       operatorInputFlag = false
     }
-    displaySentenceNumber.value = `${displaySentenceNumber.value}${value}`
+    displaySentenceNumber.value = `${displaySentenceNumber.value}${inputBtn}`
   }
   else {
-    addOperation(value)
+    addOperation(inputBtn)
   }
 }
 
@@ -106,6 +115,8 @@ const btnClearDisplay = () => {
 const btnResult = () => {
   if (!operatorInputFlag) {
     displayResult.value = evaluate(numericExpression.value + displaySentenceNumber.value)
+    console.log(numericExpression.value)
+    console.log(displaySentenceNumber.value)
     historyResults.value.push(`${numericExpression.value} ${displaySentenceNumber.value} = ${displayResult.value}`)
     numericExpression.value = ''
     displaySentenceNumber.value = ''
@@ -118,7 +129,7 @@ const btnResult = () => {
 const addOperation = (value: inputBtn) => {
   if (value === '.') {
     if (displaySentenceNumber.value.indexOf('.') === -1) {
-      displaySentenceNumber.value = `${displaySentenceNumber.value}${value}`
+      displaySentenceNumber.value = `${displaySentenceNumber.value} ${value}`
     }
     return
   }
@@ -131,9 +142,9 @@ const addOperation = (value: inputBtn) => {
   addOperator(value)
 }
 
-const addOperator = (value: inputBtn) => {
+const addOperator = (inputBtn: inputBtn) => {
   if (!operatorInputFlag) {
-    numericExpression.value += `${displaySentenceNumber.value} ${value} `
+    numericExpression.value += `${displaySentenceNumber.value} ${inputBtn} `
     displaySentenceNumber.value = ''
     operatorInputFlag = true
   }
@@ -156,7 +167,8 @@ const addOperator = (value: inputBtn) => {
   font-size: 20px;
 }
 
-.expressionsDisplayList {
+.div {
   padding: 2;
 }
 </style>
+./utils/CheckersInput
