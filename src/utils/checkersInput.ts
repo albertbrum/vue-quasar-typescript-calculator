@@ -1,5 +1,5 @@
-export class CheckerInputBtn {
-  public notIsNumber(inputBtn: string | number): boolean {
+export default class CheckerInputBtn {
+  public notIsNumber(inputBtn: string): boolean {
     return isNaN(Number(inputBtn));
   }
 }

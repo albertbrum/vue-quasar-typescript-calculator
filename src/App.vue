@@ -32,17 +32,18 @@
             <div class="row q-col-gutter-sm">
               <div class="col-3" v-for="(btn, index) in enumBtnKeysCalc" :key="index">
                 <q-btn class="full-width text-h6" :color="checkerInput.notIsNumber(btn) ? 'indigo' : 'grey-2'"
-                  :text-color="checkerInput.notIsNumber(btn) ? 'white' : 'grey-8'" @click="btnKeyinput(btn)">
+                  :text-color="checkerInput.notIsNumber(btn) ? 'white' : 'grey-8'"
+                  @click="actionsInputKeys.btnKeyInput(btn, displaySentenceNumber)">
                   {{ btn }}
                 </q-btn>
               </div>
               <div class="col-6">
-                <q-btn class="full-width text-h6" color="indigo" @click="btnClearDisplay">
+                <q-btn class="full-width text-h6" color="indigo" @click="actionsInputKeys.btnClearDisplay()">
                   CE
                 </q-btn>
               </div>
               <div class="col-6">
-                <q-btn class="full-width text-h6" color="orange" @click="btnResult">
+                <q-btn class="full-width text-h6" color="orange" @click="actionsInputKeys.btnResult()">
                   =
                 </q-btn>
               </div>
@@ -52,103 +53,30 @@
       </div>
     </div>
   </div>
+  <div>{{ actionsInputKeys.displayResult }}</div>
 </template>
 
 <script setup lang="ts">
 
-import { ref } from 'vue'
-import { evaluate } from 'mathjs'
 import enumBtnKeysCalc from './utils/enumBtnKeysCalc'
-import { CheckerInputBtn } from './utils/checkersInput'
+import ActionsInputKeys from './utils/ActionsInputKeys'
+import CheckerInputBtn from './utils/CheckersInput';
 
-// variavel de junçao de string da expressao
-type numericExpression = (number | string)
-const numericExpression = ref('')
+// const checkerInput = new CheckerInputBtn(inputBtn)
+// const actionsInputKeys = new ActionsInputKeys(checkerInput)
+// const displaySentenceNumber = '';
+// const numericExpression = actionsInputKeys.numericExpression
+// const displayResult = actionsInputKeys.displayResult
+// const historyResults = [''];
+// const inputBtn = '';
 
-// variavel de entrada das keys da calculadora
-type inputBtn = (number | string)
-const inputBtn = ('')
+const checkerInput = new CheckerInputBtn()
+const actionsInputKeys = new ActionsInputKeys()
 
-// variaveis de exibicao de display
-
-type displaySentenceNumber = (number | string)
-type displayResult = string
-type historyResults = string
-
-// type notIsNumber = boolean
-
-type operatorInputFlag = boolean
-let operatorInputFlag = false
-
-// metodos e classes
-type checkerInput = string
-
-const checkerInput = new CheckerInputBtn();
-const displaySentenceNumber = ref('')
-const displayResult = ref('0')
-const historyResults = ref(['sem historico'])
-
-//const notIsNumber = {checkerInput.notIsNumber(inputBtn)}
-
-//const notIsNumber = (inputBtn: inputBtn) => isNaN(Number(inputBtn))
-
-const btnKeyinput = (inputBtn: inputBtn) => {
-  if (!checkerInput.notIsNumber(inputBtn)) {
-    if (operatorInputFlag) {
-      displaySentenceNumber.value = ''
-      operatorInputFlag = false
-    }
-    displaySentenceNumber.value = `${displaySentenceNumber.value}${inputBtn}`
-  }
-  else {
-    addOperation(inputBtn)
-  }
-}
-
-const btnClearDisplay = () => {
-  displaySentenceNumber.value = ''
-  numericExpression.value = ''
-  displayResult.value = '0'
-  operatorInputFlag = true
-}
-
-const btnResult = () => {
-  if (!operatorInputFlag) {
-    displayResult.value = evaluate(numericExpression.value + displaySentenceNumber.value)
-    console.log(numericExpression.value)
-    console.log(displaySentenceNumber.value)
-    historyResults.value.push(`${numericExpression.value} ${displaySentenceNumber.value} = ${displayResult.value}`)
-    numericExpression.value = ''
-    displaySentenceNumber.value = ''
-  }
-  else {
-    displayResult.value = 'Error!'
-  }
-}
-
-const addOperation = (value: inputBtn) => {
-  if (value === '.') {
-    if (displaySentenceNumber.value.indexOf('.') === -1) {
-      displaySentenceNumber.value = `${displaySentenceNumber.value} ${value}`
-    }
-    return
-  }
-  if (value === '%') {
-    if (displaySentenceNumber.value !== '') {
-      displaySentenceNumber.value = `${parseFloat(displaySentenceNumber.value) / 100}`
-    }
-    return
-  }
-  addOperator(value)
-}
-
-const addOperator = (inputBtn: inputBtn) => {
-  if (!operatorInputFlag) {
-    numericExpression.value += `${displaySentenceNumber.value} ${inputBtn} `
-    displaySentenceNumber.value = ''
-    operatorInputFlag = true
-  }
-}
+const displaySentenceNumber = actionsInputKeys.displaySentenceNumber
+const numericExpression = actionsInputKeys.numericExpression
+const displayResult = actionsInputKeys.displayResult
+const historyResults = actionsInputKeys.historyResults
 
 </script>
 
