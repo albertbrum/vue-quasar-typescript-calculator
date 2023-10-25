@@ -11,9 +11,9 @@
                   expand-icon-class="text-white">
                   <q-card class="bg-grey-2 text-indigo">
                     <q-scroll-area visible style="height: 100px; max-width: 300px;">
-                      <q-card-section v-for="(div, index) in historyResults" :key="index">
-                        <div v-if="historyResults.length === 1 || index !== 0">
-                          {{ historyResults[index] }}
+                      <q-card-section v-for="(div, index) in actionsInputKeys.historyResults.value" :key="index">
+                        <div v-if="actionsInputKeys.historyResults.value.length === 1 || index !== 0">
+                          {{ actionsInputKeys.historyResults.value[index] }}
                         </div>
                       </q-card-section>
                     </q-scroll-area>
@@ -24,16 +24,16 @@
           </q-card-section>
           <q-card-section>
             <div class="text-h5 text-grey-6 text-right">
-              {{ numericExpression + displaySentenceNumber }}
+              {{ actionsInputKeys.numericExpression.value + actionsInputKeys.displaySentenceNumber.value }}
             </div>
-            <div class="text-h3 text-right"> {{ displayResult }} </div>
+            <div class="text-h3 text-right"> {{ actionsInputKeys.displayResult.value }} </div>
           </q-card-section>
           <q-card-section class="bg-grey-4">
             <div class="row q-col-gutter-sm">
               <div class="col-3" v-for="(btn, index) in enumBtnKeysCalc" :key="index">
                 <q-btn class="full-width text-h6" :color="checkerInput.notIsNumber(btn) ? 'indigo' : 'grey-2'"
                   :text-color="checkerInput.notIsNumber(btn) ? 'white' : 'grey-8'"
-                  @click="actionsInputKeys.btnKeyInput(btn, displaySentenceNumber)">
+                  @click="actionsInputKeys.btnKeyInput(btn), clickBtnLog(btn)">
                   {{ btn }}
                 </q-btn>
               </div>
@@ -53,7 +53,10 @@
       </div>
     </div>
   </div>
-  <div>{{ actionsInputKeys.displayResult }}</div>
+  <div>{{ actionsInputKeys.numericExpression.value }}</div>
+  <div>{{ actionsInputKeys.displaySentenceNumber.value }}</div>
+  <div>{{ actionsInputKeys.displayResult.value }}</div>
+  <div>{{ actionsInputKeys.historyResults.value }}</div>
 </template>
 
 <script setup lang="ts">
@@ -68,15 +71,27 @@ import CheckerInputBtn from './utils/CheckersInput';
 // const numericExpression = actionsInputKeys.numericExpression
 // const displayResult = actionsInputKeys.displayResult
 // const historyResults = [''];
-// const inputBtn = '';
 
 const checkerInput = new CheckerInputBtn()
 const actionsInputKeys = new ActionsInputKeys()
 
-const displaySentenceNumber = actionsInputKeys.displaySentenceNumber
-const numericExpression = actionsInputKeys.numericExpression
-const displayResult = actionsInputKeys.displayResult
-const historyResults = actionsInputKeys.historyResults
+// const displaySentenceNumber = ref('')
+// const numericExpression = actionsInputKeys.numericExpression
+// const displayResult = actionsInputKeys.displayResult
+// const historyResults = actionsInputKeys.historyResults
+
+// const displaySentenceNumber = actionsInputKeys.displaySentenceNumber
+// const numericExpression = actionsInputKeys.numericExpression
+// const displayResult = actionsInputKeys.displayResult
+// const historyResults = actionsInputKeys.historyResults
+
+const clickBtnLog = (inputBtn: string) => {
+  console.log('inputBtn', inputBtn)
+  console.log('displaySentenceNumber', actionsInputKeys.displaySentenceNumber.value)
+  console.log('numericExpression', actionsInputKeys.numericExpression.value)
+  console.log('displayResult', actionsInputKeys.displayResult.value)
+  console.log('historyResults', actionsInputKeys.historyResults.value)
+}
 
 </script>
 
