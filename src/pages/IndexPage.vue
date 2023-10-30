@@ -29,48 +29,14 @@
                 </div>
               </div>
             </q-card-section>
-            <q-card-section>
+            <q-card-section class="display-calculator">
               <div class="text-h5 text-grey-6 text-right">
                 {{ actionsInputKeys.numericExpression.value + actionsInputKeys.displaySentenceNumber.value }}
               </div>
               <div class="text-h3 text-right">{{ actionsInputKeys.displayResult.value }}</div>
             </q-card-section>
-            <q-card-section class="bg-grey-4">
-              <div class="row q-col-gutter-sm">
-                <div
-                  class="col-3"
-                  v-for="(btn, index) in enumBtnKeysCalc"
-                  :key="index"
-                >
-                  <q-btn
-                    class="full-width text-h6"
-                    :color="checkerInput.notIsNumber(btn) ? 'indigo' : 'grey-2'"
-                    :text-color="checkerInput.notIsNumber(btn) ? 'white' : 'grey-8'"
-                    @click="actionsInputKeys.btnKeyInput(btn), clickBtnLog(btn)"
-                  >
-                    {{ btn }}
-                  </q-btn>
-                </div>
-                <div class="col-6">
-                  <q-btn
-                    class="full-width text-h6"
-                    color="indigo"
-                    @click="actionsInputKeys.btnClearDisplay()"
-                  >
-                    CE
-                  </q-btn>
-                </div>
-                <div class="col-6">
-                  <q-btn
-                    class="full-width text-h6"
-                    color="orange"
-                    @click="actionsInputKeys.btnResult()"
-                  >
-                    =
-                  </q-btn>
-                </div>
-              </div>
-            </q-card-section>
+
+            <CalculatorKeypad :enumBtnKeysCalc="enumBtnKeysCalc" />
           </q-card>
         </div>
       </div>
@@ -89,6 +55,7 @@
 
   import HistoryExpansionItem from '../components/HistoryExpansionItem.vue'
   import { computed, ref } from 'vue'
+  import CalculatorKeypad from 'src/components/CalculatorKeypad.vue'
 
   const checkerInput = new CheckerInputBtn()
   const actionsInputKeys = new ActionsInputKeys()
@@ -132,4 +99,3 @@
     padding: 2;
   }
 </style>
-./utils/CheckersInput ../models/ActionsInputKeys ../stores/enumBtnKeysCalc

@@ -17,4 +17,4 @@ enum enumBtnKeysCalc {
   MULTIPLY = '*',
 }
 
-export default enumBtnKeysCalc;
+export default enumBtnKeysCalc
