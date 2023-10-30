@@ -1,7 +1,7 @@
 import { evaluate } from 'mathjs'
 import { ICalculatorMethods } from 'src/interfaces/ICalculatorMethods'
 import { ICalculatorState } from 'src/interfaces/ICalculatorStates'
-import CheckerInputBtn from './CheckersInput'
+import CheckerInputBtn from '../utils/CheckersInput'
 import { ref } from 'vue'
 // import Operations from './Operations';
 
@@ -9,7 +9,7 @@ import { ref } from 'vue'
 
 export default class ActionsInputKeys implements ICalculatorMethods, ICalculatorState {
   public displayResult = ref('0')
-  public historyResults = ref(['sem historico'])
+  public historyResults = ref([''])
   public operatorInputFlag = true
   public displaySentenceNumber = ref('')
   public numericExpression = ref('')

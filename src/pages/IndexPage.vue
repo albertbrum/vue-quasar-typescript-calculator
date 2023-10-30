@@ -20,20 +20,8 @@
                         style="height: 100px; max-width: 300px"
                       >
                         <q-card-section>
-                          <!-- <div
-                            v-for="(result, index) in historyResults"
-                            :key="index"
-                          >
-                            <div v-if="historyResults.length === 1 || index !== 0">
-                              {{ result }}
-                            </div>
-                          </div> -->
-                          <HistoryExpansionItem
-                            v-for="(item, index) in historyResults"
-                            :key="index"
-                            :value-model="historyResults"
-                          >
-                          </HistoryExpansionItem>
+                          <HistoryExpansionItem :expressions="historyResults" />
+                          <span>{{ messageNoHistory }}</span>
                         </q-card-section>
                       </q-scroll-area>
                     </q-card>
@@ -96,32 +84,23 @@
 
 <script setup lang="ts">
   import enumBtnKeysCalc from '../utils/enumBtnKeysCalc'
-  import ActionsInputKeys from '../utils/ActionsInputKeys'
+  import ActionsInputKeys from '../models/ActionsInputKeys'
   import CheckerInputBtn from '../utils/CheckersInput'
 
   import HistoryExpansionItem from '../components/HistoryExpansionItem.vue'
-  import { ref } from 'vue'
-
-  // const checkerInput = new CheckerInputBtn(inputBtn)
-  // const actionsInputKeys = new ActionsInputKeys(checkerInput)
-  // const displaySentenceNumber = '';
-  // const numericExpression = actionsInputKeys.numericExpression
-  // const displayResult = actionsInputKeys.displayResult
-  // const historyResults = [''];
+  import { computed, ref } from 'vue'
 
   const checkerInput = new CheckerInputBtn()
   const actionsInputKeys = new ActionsInputKeys()
 
-  const historyResults = actionsInputKeys.historyResults.value
-  // const displaySentenceNumber = ref('')
-  // const numericExpression = actionsInputKeys.numericExpression
-  // const displayResult = actionsInputKeys.displayResult
-  // const historyResults = actionsInputKeys.historyResults
+  const historyResults = ref(actionsInputKeys.historyResults.value)
 
-  // const displaySentenceNumber = actionsInputKeys.displaySentenceNumber
-  // const numericExpression = actionsInputKeys.numericExpression
-  // const displayResult = actionsInputKeys.displayResult
-  // const historyResults = actionsInputKeys.historyResults
+  const messageNoHistory = computed(() => {
+    return historyResults.value.length === 1 ? 'Sem registros' : ''
+  })
+
+  console.log('TAMANHO DA HISTORY', historyResults.value.length)
+  console.log(historyResults.value)
 
   const clickBtnLog = (inputBtn: string) => {
     console.log('inputBtn', inputBtn)
@@ -129,6 +108,8 @@
     console.log('numericExpression', actionsInputKeys.numericExpression.value)
     console.log('displayResult', actionsInputKeys.displayResult.value)
     console.log('historyResults', actionsInputKeys.historyResults.value)
+    console.log('TAMANHO DA HISTORY', historyResults.value.length)
+    console.log(historyResults)
   }
 </script>
 
@@ -151,4 +132,4 @@
     padding: 2;
   }
 </style>
-./utils/CheckersInput
+./utils/CheckersInput ../models/ActionsInputKeys ../stores/enumBtnKeysCalc
