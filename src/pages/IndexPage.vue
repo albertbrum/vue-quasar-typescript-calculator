@@ -39,28 +39,34 @@
             <div>
               <q-card-section class="bg-grey-4">
                 <div class="row q-col-gutter-sm">
-                  <CalculatorKey :enumKeysArray="enumKeysArrayPage" />
+                  <div
+                    class="col-3"
+                    v-for="(btn, index) in props.enumKeysArrayPage"
+                    :key="index"
+                  >
+                    <CalculatorKey
+                      :enumKeysArray="enumKeysArrayPage"
+                      :textColorButton="checkerInput.notIsNumber(btn) ? 'white' : 'white'"
+                      :color-button="checkerInput.notIsNumber(btn) ? 'grey' : 'indigo'"
+                      @click="actionsInputKeys.btnKeyInput(btn), clickBtnLog(btn)"
+                      :btn="btn"
+                    />
+                  </div>
+
                   <div class="col-6">
-                    <q-btn
+                    <CalculatorKey
                       class="full-width text-h6"
                       color="indigo"
-                    >
-                      CE
-                    </q-btn>
+                      @click="actionsInputKeys.btnClearDisplay"
+                      btn="CE"
+                    />
                   </div>
                   <div class="col-6">
-                    <q-btn
+                    <CalculatorKey
                       class="full-width text-h6"
                       color="orange"
-                    >
-                      =
-                    </q-btn>
-                    <q-btn
-                      class="full-width text-h6"
-                      color="props.colorButton"
-                      text-color="props.colorButton"
-                    >
-                    </q-btn>
+                      btn="="
+                    />
                   </div>
                 </div>
               </q-card-section>
@@ -90,7 +96,7 @@
 
   const props = defineProps({
     enumKeysArrayPage: {
-      type: Array as PropType<any>,
+      type: Object as PropType<any>,
       default: () => enumBtnKeysCalc,
     },
   })
@@ -104,9 +110,6 @@
     return historyResults.value.length === 1 ? 'Sem registros' : ''
   })
 
-  const checkerColorInput = computed(() => {
-    return checkerInput.notIsNumber(actionsInputKeys.displaySentenceNumber.value)
-  })
   console.log('TAMANHO DA HISTORY', historyResults.value.length)
   console.log(historyResults.value)
 

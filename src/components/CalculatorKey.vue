@@ -1,27 +1,22 @@
 <template>
-  <div
-    class="col-3"
-    v-for="(btn, index) in props.enumKeysArray"
-    :key="index"
+  <q-btn
+    class="full-width text-h6"
+    :color="props.colorButton"
+    :text-color="props.textColorButton"
+    :click="props.actionInputKey"
   >
-    <q-btn
-      class="full-width text-h6"
-      color="props.colorButton"
-      text-color="props.colorButton"
-      @click="props.actionInputKey"
-    >
-      {{ btn }}
-    </q-btn>
-  </div>
+    {{ props.btn }}
+  </q-btn>
 </template>
 
 <script setup lang="ts">
   import { PropType } from 'vue'
   const props = defineProps({
-    enumKeysArray: Array as PropType<any[]>,
+    enumKeysArray: Object as PropType<string[]>,
     actionInputKey: Function,
     colorButton: String,
     textColorButton: String,
+    btn: String,
   })
 </script>
 
