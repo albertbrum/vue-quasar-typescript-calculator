@@ -6,9 +6,9 @@ tecnologias Vue.js e Quasar.
 
 ## Introdução
 
-Neste projeto, foi uma calculadora simples, mas funcional, que permite realizar operações matemáticas básicas, como adição, subtração,
-multiplicação, divisão e porcentagem. Está sendo utilizado o Vue.js para a criação da interface de usuário e o Quasar para facilitar o
-desenvolvimento responsivo e de componentes do FRONT-END.
+Este projeto tem o intuito de desenvolver para estudo uma calculadora simples, mas funcional, que permite realizar operações matemáticas
+básicas, como adição, subtração, multiplicação, divisão e porcentagem. Está sendo utilizado o Vue.js para a criação da interface de usuário
+e o Quasar para facilitar o desenvolvimento responsivo e de componentes do FRONT-END.
 
 ## Tecnologias Utilizadas
 
