@@ -1,12 +1,5 @@
 module.exports = {
-  // https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
-  // This option interrupts the configuration hierarchy at this file
-  // Remove this if you have an higher level ESLint config file (it usually happens into a monorepos)
   root: true,
-
-  // https://eslint.vuejs.org/user-guide/#how-to-use-a-custom-parser
-  // Must use parserOptions instead of "parser" to allow vue-eslint-parser to keep working
-  // `parser: 'vue-eslint-parser'` is already included with any 'plugin:vue/**' config and should be omitted
 
   parserOptions: {
     parser: require.resolve('@typescript-eslint/parser'),
@@ -24,15 +17,8 @@ module.exports = {
     'vue/setup-compiler-macros': true,
   },
 
-  // Rules order is important, please avoid shuffling them
-
   extends: [
-    // Base ESLint recommended rules
     'eslint:recommended',
-
-    // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#usage
-    // ESLint typescript rules
-    //'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     //'plugin:@typescript-eslint/recommended-requiring-type-checking',
 
@@ -46,8 +32,6 @@ module.exports = {
     // https://github.com/prettier/eslint-config-prettier#installation
     // usage with Prettier, provided by 'eslint-config-prettier'.
     'prettier',
-    //'prettier/@typescript-eslint',
-    //'prettier/vue',
   ],
 
   plugins: [

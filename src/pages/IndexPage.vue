@@ -36,7 +36,35 @@
               <div class="text-h3 text-right">{{ actionsInputKeys.displayResult.value }}</div>
             </q-card-section>
 
-            <CalculatorKeypad :enumBtnKeysCalc="enumBtnKeysCalc" />
+            <div>
+              <q-card-section class="bg-grey-4">
+                <div class="row q-col-gutter-sm">
+                  <CalculatorKey :enumKeysArray="enumKeysArrayPage" />
+                  <div class="col-6">
+                    <q-btn
+                      class="full-width text-h6"
+                      color="indigo"
+                    >
+                      CE
+                    </q-btn>
+                  </div>
+                  <div class="col-6">
+                    <q-btn
+                      class="full-width text-h6"
+                      color="orange"
+                    >
+                      =
+                    </q-btn>
+                    <q-btn
+                      class="full-width text-h6"
+                      color="props.colorButton"
+                      text-color="props.colorButton"
+                    >
+                    </q-btn>
+                  </div>
+                </div>
+              </q-card-section>
+            </div>
           </q-card>
         </div>
       </div>
@@ -44,18 +72,28 @@
       <div>{{ actionsInputKeys.displaySentenceNumber.value }}</div>
       <div>{{ actionsInputKeys.displayResult.value }}</div>
       <div>{{ actionsInputKeys.historyResults.value }}</div>
+      <div>{{ props.enumKeysArrayPage }}</div>
+      <div>{{ enumBtnKeysCalc }}</div>
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
   import enumBtnKeysCalc from '../utils/enumBtnKeysCalc'
+
   import ActionsInputKeys from '../models/ActionsInputKeys'
   import CheckerInputBtn from '../utils/CheckersInput'
 
   import HistoryExpansionItem from '../components/HistoryExpansionItem.vue'
-  import { computed, ref } from 'vue'
-  import CalculatorKeypad from 'src/components/CalculatorKeypad.vue'
+  import { computed, PropType, ref } from 'vue'
+  import CalculatorKey from 'src/components/CalculatorKey.vue'
+
+  const props = defineProps({
+    enumKeysArrayPage: {
+      type: Array as PropType<any>,
+      default: () => enumBtnKeysCalc,
+    },
+  })
 
   const checkerInput = new CheckerInputBtn()
   const actionsInputKeys = new ActionsInputKeys()
@@ -66,6 +104,9 @@
     return historyResults.value.length === 1 ? 'Sem registros' : ''
   })
 
+  const checkerColorInput = computed(() => {
+    return checkerInput.notIsNumber(actionsInputKeys.displaySentenceNumber.value)
+  })
   console.log('TAMANHO DA HISTORY', historyResults.value.length)
   console.log(historyResults.value)
 

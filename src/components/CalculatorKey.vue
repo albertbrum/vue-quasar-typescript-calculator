@@ -1,13 +1,13 @@
 <template>
   <div
     class="col-3"
-    v-for="(btn, index) in props.buttonsKeys"
+    v-for="(btn, index) in props.enumKeysArray"
     :key="index"
   >
     <q-btn
       class="full-width text-h6"
-      :color="colorButton"
-      :text-color="textColorButton"
+      color="props.colorButton"
+      text-color="props.colorButton"
       @click="props.actionInputKey"
     >
       {{ btn }}
@@ -16,8 +16,9 @@
 </template>
 
 <script setup lang="ts">
+  import { PropType } from 'vue'
   const props = defineProps({
-    buttonsKeys: String,
+    enumKeysArray: Array as PropType<any[]>,
     actionInputKey: Function,
     colorButton: String,
     textColorButton: String,
