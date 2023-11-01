@@ -1,5 +1,4 @@
 import type { Ref } from 'vue';
-
 export interface ICalculatorState {
   operatorInputFlag: boolean;
   displaySentenceNumber: Ref<string>;

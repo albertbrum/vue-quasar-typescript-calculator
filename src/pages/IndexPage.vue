@@ -46,25 +46,24 @@
                   >
                     <CalculatorKey
                       :enumKeysArray="enumKeysArrayPage"
-                      :textColorButton="checkerInput.notIsNumber(btn) ? 'white' : 'white'"
-                      :color-button="checkerInput.notIsNumber(btn) ? 'grey' : 'indigo'"
-                      @click="actionsInputKeys.btnKeyInput(btn), clickBtnLog(btn)"
+                      :textColorButton="checkerInput.notIsNumber(btn) ? 'white' : 'indigo'"
+                      :color-button="checkerInput.notIsNumber(btn) ? 'indigo' : 'grey-2'"
+                      @click="clickBtnLog(btn)"
                       :btn="btn"
                     />
                   </div>
 
                   <div class="col-6">
                     <CalculatorKey
-                      class="full-width text-h6"
                       color="indigo"
-                      @click="actionsInputKeys.btnClearDisplay"
                       btn="CE"
+                      :actionKey="clearDisplay"
                     />
                   </div>
                   <div class="col-6">
                     <CalculatorKey
-                      class="full-width text-h6"
                       color="orange"
+                      @click="resultDisplay"
                       btn="="
                     />
                   </div>
@@ -74,22 +73,26 @@
           </q-card>
         </div>
       </div>
-      <div>{{ actionsInputKeys.numericExpression.value }}</div>
-      <div>{{ actionsInputKeys.displaySentenceNumber.value }}</div>
-      <div>{{ actionsInputKeys.displayResult.value }}</div>
-      <div>{{ actionsInputKeys.historyResults.value }}</div>
-      <div>{{ props.enumKeysArrayPage }}</div>
-      <div>{{ enumBtnKeysCalc }}</div>
+      <div>
+        numericExpression = <bold>{{ keyInput.numericExpression.value }}</bold>
+      </div>
+      <div>
+        displaySentenceNumber = <bold>{{ keyInput.displaySentenceNumber.value }}</bold>
+      </div>
+      <div>
+        displayResult = <bold>{{ keyInput.displayResult.value }}</bold>
+      </div>
+      <div>
+        historyResults = <bold>{{ keyInput.historyResults.value }}</bold>
+      </div>
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-  import enumBtnKeysCalc from '../utils/enumBtnKeysCalc'
-
-  import ActionsInputKeys from '../models/ActionsInputKeys'
-  import CheckerInputBtn from '../utils/CheckersInput'
-
+  import enumBtnKeysCalc from '../types/enumBtnKeysCalc'
+  import KeyInput from '../models/KeysInputs'
+  import CheckerInputBtn from '../utils/CheckerInput'
   import HistoryExpansionItem from '../components/HistoryExpansionItem.vue'
   import { computed, PropType, ref } from 'vue'
   import CalculatorKey from 'src/components/CalculatorKey.vue'
@@ -101,10 +104,18 @@
     },
   })
 
-  const checkerInput = new CheckerInputBtn()
-  const actionsInputKeys = new ActionsInputKeys()
+  let checkerInput = new CheckerInputBtn()
+  let keyInput = new KeyInput()
 
-  const historyResults = ref(actionsInputKeys.historyResults.value)
+  // const clearDisplay: PropType<void | undefined> = () => {
+  //   keyInput(inputBtn)
+  // }
+
+  // const resultDisplay = () => {
+  //   keyInput.btnResult()
+  // }
+
+  const historyResults = ref(keyInput.historyResults.value)
 
   const messageNoHistory = computed(() => {
     return historyResults.value.length === 1 ? 'Sem registros' : ''
@@ -115,10 +126,10 @@
 
   const clickBtnLog = (inputBtn: string) => {
     console.log('inputBtn', inputBtn)
-    console.log('displaySentenceNumber', actionsInputKeys.displaySentenceNumber.value)
-    console.log('numericExpression', actionsInputKeys.numericExpression.value)
-    console.log('displayResult', actionsInputKeys.displayResult.value)
-    console.log('historyResults', actionsInputKeys.historyResults.value)
+    console.log('displaySentenceNumber', keyInput.displaySentenceNumber.value)
+    console.log('numericExpression', keyInput.numericExpression.value)
+    console.log('displayResult', keyInput.displayResult.value)
+    console.log('historyResults', keyInput.historyResults.value)
     console.log('TAMANHO DA HISTORY', historyResults.value.length)
     console.log(historyResults)
   }
@@ -143,3 +154,4 @@
     padding: 2;
   }
 </style>
+../types/enumBtnKeysCalc ../models/KeysInputs ../models/ActionsInputs../utils/CheckerInput

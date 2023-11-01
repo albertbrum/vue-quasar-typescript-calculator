@@ -1,7 +1,6 @@
-// import { Ref } from 'vue';
-
 export interface ICalculatorMethods {
-  btnKeyInput(inputBtn: string): void;
-  btnClearDisplay(): void;
-  btnResult(): void;
+  KeyInputNumber(inputBtn: string): void
+  KeyInputOperator(inputBtn: string): void
+  KeyInputClear(): void
+  KeyInputResult(): void
 }
