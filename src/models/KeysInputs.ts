@@ -1,24 +1,23 @@
-
 import DataHandler from './DataHandler'
 import CheckerInputs from 'src/utils/CheckerInputs'
 import MainCalculator from './Main'
 
 export default class KeysInputs extends MainCalculator {
-  public dataHandler: DataHandler = new DataHandler
-  public checkInput: CheckerInputs = new CheckerInputs
+  public dataHandler: DataHandler = new DataHandler()
+  public checkInput: CheckerInputs = new CheckerInputs()
 
   public KeyInput(inputBtn: string): void {
-    console.log('CONSOLEDENTROKEYINPUT',inputBtn)
+    // console.log('CONSOLEDENTROKEYINPUT',inputBtn)
     this.checkInput.CheckInput(inputBtn)
-    console.log(this.checkInput.CheckInput(inputBtn))
+    // console.log(this.checkInput.CheckInput(inputBtn))
     if (this.checkInput.CheckInput(inputBtn) === 'isNumber') {
-      console.log('CONSOLEDENTROISNUMBER', this.checkInput.CheckInput(inputBtn))
+      // console.log('CONSOLEDENTROISNUMBER', this.checkInput.CheckInput(inputBtn))
       this.dataHandler.handlerNumber(inputBtn)
     }
     if (this.checkInput.CheckInput(inputBtn) === 'isOperator') {
       this.dataHandler.handlerOperator(inputBtn)
     }
-    if (this.checkInput.CheckInput(inputBtn)=== 'isClear') {
+    if (this.checkInput.CheckInput(inputBtn) === 'isClear') {
       this.dataHandler.handlerClear(inputBtn)
     }
     if (this.checkInput.CheckInput(inputBtn) === 'isResult') {

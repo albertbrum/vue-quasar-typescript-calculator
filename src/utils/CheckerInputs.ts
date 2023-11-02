@@ -6,8 +6,8 @@ export default class CheckerInputs {
   public mathOperatorInstance: isMathOperator = new isMathOperator()
 
   public CheckInput(inputBtn: string): string {
-    console.log(inputBtn)
-    console.log(!isNaN(Number(inputBtn)))
+    // console.log(inputBtn)
+    // console.log(!isNaN(Number(inputBtn)))
     if (!isNaN(Number(inputBtn))) {
       this.inputChecked = 'isNumber'
     } else if (inputBtn === 'CE') {

@@ -5,7 +5,7 @@ export default class MainCalculator implements ICalculatorState {
   public displayResult: Ref<string>
   public historyResults: Ref<Array<string>>
   public operatorInputFlag: boolean
-  public displaySentenceNumber: Ref<string>
+  public displaySentence: Ref<string>
   public numericExpression: Ref<string>
   public inputBtn: string
 
@@ -13,7 +13,7 @@ export default class MainCalculator implements ICalculatorState {
     this.displayResult = ref('0')
     this.historyResults = ref([''])
     this.operatorInputFlag = false
-    this.displaySentenceNumber = ref('')
+    this.displaySentence = ref('')
     this.numericExpression = ref('')
     this.inputBtn = ''
   }
