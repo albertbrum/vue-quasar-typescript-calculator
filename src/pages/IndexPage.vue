@@ -1,3 +1,4 @@
+
 <template>
   <q-page>
     <div>
@@ -20,7 +21,7 @@
                         style="height: 100px; max-width: 300px"
                       >
                         <q-card-section>
-                          <HistoryExpansionItem :expressions="historyResults" />
+                          <HistoryComponent :expressions="historyResults" />
                           <span>{{ messageNoHistory }}</span>
                         </q-card-section>
                       </q-scroll-area>
@@ -31,9 +32,9 @@
             </q-card-section>
             <q-card-section class="display-calculator">
               <div class="text-h5 text-grey-6 text-right">
-                {{ actionsInputKeys.numericExpression.value + actionsInputKeys.displaySentenceNumber.value }}
+                {{ componentModel.numericExpression.value + componentModel.displaySentenceNumber.value }}
               </div>
-              <div class="text-h3 text-right">{{ actionsInputKeys.displayResult.value }}</div>
+              <div class="text-h3 text-right">{{ componentModel.displayResult.value }}</div>
             </q-card-section>
 
             <div>
@@ -44,27 +45,28 @@
                     v-for="(btn, index) in props.enumKeysArrayPage"
                     :key="index"
                   >
-                    <CalculatorKey
+                    <KeyboardComponent
                       :enumKeysArray="enumKeysArrayPage"
-                      :textColorButton="checkerInput.notIsNumber(btn) ? 'white' : 'indigo'"
-                      :color-button="checkerInput.notIsNumber(btn) ? 'indigo' : 'grey-2'"
-                      @click="clickBtnLog(btn)"
-                      :btn="btn"
+                      :textColorButton="inputKeyIs(btn) ? 'indigo' : 'white'"
+                      :color-button="inputKeyIs(btn) ? 'grey-2' : 'indigo'"
+                      @click="componentModel.KeyInput(btn)"
+                      :inputBtn="btn"
                     />
                   </div>
 
                   <div class="col-6">
-                    <CalculatorKey
+                    <KeyboardComponent
                       color="indigo"
-                      btn="CE"
-                      :actionKey="clearDisplay"
+                      :input-btn="'CE'"
+                      @click="componentModel.KeyInput('CE')"
                     />
                   </div>
                   <div class="col-6">
-                    <CalculatorKey
+                    <KeyboardComponent
                       color="orange"
-                      @click="resultDisplay"
-                      btn="="
+                      :inputBtn="'='"
+                      @click="componentModel.KeyInput('=')"
+
                     />
                   </div>
                 </div>
@@ -74,16 +76,16 @@
         </div>
       </div>
       <div>
-        numericExpression = <bold>{{ keyInput.numericExpression.value }}</bold>
+        numericExpression = <bold>{{ componentModel.numericExpression }}</bold>
       </div>
       <div>
-        displaySentenceNumber = <bold>{{ keyInput.displaySentenceNumber.value }}</bold>
+        displaySentenceNumber = <bold>{{ componentModel.displaySentenceNumber }}</bold>
       </div>
       <div>
-        displayResult = <bold>{{ keyInput.displayResult.value }}</bold>
+        displayResult = <bold>{{ componentModel.displayResult }}</bold>
       </div>
       <div>
-        historyResults = <bold>{{ keyInput.historyResults.value }}</bold>
+        historyResults = <bold>{{ componentModel.historyResults }}</bold>
       </div>
     </div>
   </q-page>
@@ -92,20 +94,29 @@
 <script setup lang="ts">
   import enumBtnKeysCalc from '../types/enumBtnKeysCalc'
   import KeyInput from '../models/KeysInputs'
-  import CheckerInputBtn from '../utils/CheckerInput'
-  import HistoryExpansionItem from '../components/HistoryExpansionItem.vue'
+  import CheckInput from '../utils/CheckerInputs'
+  import HistoryComponent from '../components/HistoryComponent.vue'
   import { computed, PropType, ref } from 'vue'
-  import CalculatorKey from 'src/components/CalculatorKey.vue'
+  import KeyboardComponent from 'src/components/KeyboardComponent.vue'
 
   const props = defineProps({
     enumKeysArrayPage: {
       type: Object as PropType<any>,
       default: () => enumBtnKeysCalc,
     },
+    // checkerInputKey: {
+    //   type: Object as PropType<any>,
+    //   default: () => new CheckerInputBtn(),
+    // },
+    // componentModel: {
+    //   type: Object as PropType<any>,
+    //   default: () => new KeyInput(),
+    // },
   })
 
-  let checkerInput = new CheckerInputBtn()
-  let keyInput = new KeyInput()
+  const componentModel = new KeyInput()
+  const checkerInput = new CheckInput()
+  const inputBtn = ''
 
   // const clearDisplay: PropType<void | undefined> = () => {
   //   keyInput(inputBtn)
@@ -115,21 +126,33 @@
   //   keyInput.btnResult()
   // }
 
-  const historyResults = ref(keyInput.historyResults.value)
+  const historyResults = ref(componentModel.historyResults.value)
+
+  const keyInputAction = () => {
+    componentModel.KeyInput(inputBtn)
+  }
+
+  const inputKeyIs = (inputBtn: string) => {
+    console.log(checkerInput.CheckInput(inputBtn))
+    if (checkerInput.CheckInput(inputBtn) === 'isNumber') {
+      return true
+    }
+  }
 
   const messageNoHistory = computed(() => {
     return historyResults.value.length === 1 ? 'Sem registros' : ''
   })
 
-  console.log('TAMANHO DA HISTORY', historyResults.value.length)
-  console.log(historyResults.value)
+  //console.log('TAMANHO DA HISTORY', historyResults.value.length)
+ // console.log(historyResults.value)
 
-  const clickBtnLog = (inputBtn: string) => {
+  const clickBtnLog = () => {
+    componentModel.KeyInput(inputBtn)
     console.log('inputBtn', inputBtn)
-    console.log('displaySentenceNumber', keyInput.displaySentenceNumber.value)
-    console.log('numericExpression', keyInput.numericExpression.value)
-    console.log('displayResult', keyInput.displayResult.value)
-    console.log('historyResults', keyInput.historyResults.value)
+    console.log('displaySentenceNumber', componentModel.displaySentenceNumber)
+    console.log('numericExpression', componentModel.numericExpression.value)
+    console.log('displayResult', componentModel.displayResult.value)
+    console.log('historyResults', componentModel.historyResults.value)
     console.log('TAMANHO DA HISTORY', historyResults.value.length)
     console.log(historyResults)
   }
@@ -155,3 +178,6 @@
   }
 </style>
 ../types/enumBtnKeysCalc ../models/KeysInputs ../models/ActionsInputs../utils/CheckerInput
+
+
+

@@ -1,28 +1,27 @@
-import MainCalculator from './Main'
-import DisplayOutput from './DisplayOutput'
-import checkInput from '../utils/CheckerInput'
+
 import DataHandler from './DataHandler'
+import CheckerInputs from 'src/utils/CheckerInputs'
+import MainCalculator from './Main'
 
 export default class KeysInputs extends MainCalculator {
-  public inputBtn: string = ''
-  public inputChecked: string = ''
-
-  public checkInput: checkInput = new checkInput()
-  public displayOutput: DisplayOutput = new DisplayOutput()
-  public dataHandler: DataHandler = new DataHandler()
+  public dataHandler: DataHandler = new DataHandler
+  public checkInput: CheckerInputs = new CheckerInputs
 
   public KeyInput(inputBtn: string): void {
-    // Verifica o tipo de inputBtn usando a função isMathOperator da classe CheckerInputBtn
-    if (this.checkerInput(inputBtn) === 'isNumber') {
+    console.log('CONSOLEDENTROKEYINPUT',inputBtn)
+    this.checkInput.CheckInput(inputBtn)
+    console.log(this.checkInput.CheckInput(inputBtn))
+    if (this.checkInput.CheckInput(inputBtn) === 'isNumber') {
+      console.log('CONSOLEDENTROISNUMBER', this.checkInput.CheckInput(inputBtn))
       this.dataHandler.handlerNumber(inputBtn)
     }
-    if (this.checkerInput(inputBtn) === 'isOperator') {
+    if (this.checkInput.CheckInput(inputBtn) === 'isOperator') {
       this.dataHandler.handlerOperator(inputBtn)
     }
-    if (this.checkerInput(inputBtn) === 'isClear') {
+    if (this.checkInput.CheckInput(inputBtn)=== 'isClear') {
       this.dataHandler.handlerClear(inputBtn)
     }
-    if (this.checkerInput(inputBtn) === 'isResult') {
+    if (this.checkInput.CheckInput(inputBtn) === 'isResult') {
       this.dataHandler.handlerResult(inputBtn)
     }
   }

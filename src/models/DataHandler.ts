@@ -1,9 +1,17 @@
 import MainCalculator from './Main'
+import DisplayOutput from './DisplayOutput'
+
+public displayOutput: DisplayOutput = new DisplayOutput
 
 export default class DataHandler extends MainCalculator {
-  public handlerNumber(inputBtn: string): void {
+  public handlerNumber(inputBtn: string): Object {
+    console.log('CONSOLEDENTROHANDLERNUMBER', inputBtn)
+    console.log('CONSOLEDENTROHANDLERNUMBER', this.displaySentenceNumber.value)
     this.displaySentenceNumber.value = `${this.displaySentenceNumber.value}${inputBtn}`
+    console.log('displaySENTENCE', this.displaySentenceNumber.value)
     this.operatorInputFlag = false
+    this.displayOutput.setDisplaySentence
+    return this.displaySentenceNumber, this.operatorInputFlag
   }
   public handlerOperator(inputBtn: string): void {
     if (inputBtn === '%') {

@@ -3,9 +3,9 @@
     class="full-width text-h6"
     :color="props.colorButton"
     :text-color="props.textColorButton"
-    @click="props.actionKey"
+
   >
-    {{ props.btn }}
+    {{ props.inputBtn }}
   </q-btn>
 </template>
 
@@ -13,10 +13,9 @@
   import { PropType } from 'vue'
   const props = defineProps({
     enumKeysArray: Object as PropType<string[]>,
-    actionKey: Function as PropType<() => void | undefined>,
     colorButton: String,
     textColorButton: String,
-    btn: String,
+    inputBtn: String,
 
   })
 </script>
