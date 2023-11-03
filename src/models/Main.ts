@@ -10,10 +10,10 @@ export default class MainCalculator implements ICalculatorState {
   public inputBtn: string
 
   constructor() {
-    this.displayResult = ref('0')
+    this.displayResult = ref('')
+    this.displaySentence = ref('')
     this.historyResults = ref([''])
     this.operatorInputFlag = false
-    this.displaySentence = ref('')
     this.numericExpression = ref('')
     this.inputBtn = ''
   }
