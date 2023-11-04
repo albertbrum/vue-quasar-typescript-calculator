@@ -20,8 +20,8 @@
                         style="height: 100px; max-width: 300px"
                       >
                         <q-card-section>
-                          <HistoryComponent :expressions="keyInput.historyResults.value" />
-                          <span>{{ keyInput.historyResults.value }}</span>
+                          <HistoryComponent :expressions="historyResultsComp" />
+
                         </q-card-section>
                       </q-scroll-area>
                     </q-card>
@@ -29,12 +29,10 @@
                 </div>
               </div>
             </q-card-section>
-            <q-card-section class="display-calculator">
-              <div class="text-h5 text-grey-6 text-right">
-                {{ keyInput.numericExpression.value }}
-              </div>
-              <div class="text-h3 text-right">{{ keyInput.numericExpression.value }}</div>
-            </q-card-section>
+            <DisplayComponent
+            :display-result-comp="keyInput.displayResult.value"
+            :display-sentence-comp="keyInput.numericExpression.value + keyInput.displaySentence.value"
+            />
 
             <div>
               <q-card-section class="bg-grey-4">
@@ -48,7 +46,7 @@
                       :enumKeysArray="enumKeysArrayPage"
                       :textColorButton="inputKeyIs(btn) ? 'indigo' : 'white'"
                       :color-button="inputKeyIs(btn) ? 'grey-2' : 'indigo'"
-                      @click="actionKeyInput(btn)"
+                      @click="actionKeyInput(inputBtn = btn)"
                       :inputBtn="btn"
                     />
                   </div>
@@ -57,14 +55,14 @@
                     <KeyboardComponent
                       color="indigo"
                       :input-btn="'CE'"
-                      @click="keyInput.KeyInput('CE')"
+                      @click="actionKeyInput('CE')"
                     />
                   </div>
                   <div class="col-6">
                     <KeyboardComponent
                       color="orange"
                       :inputBtn="'='"
-                      @click="keyInput.KeyInput('=')"
+                      @click="actionKeyInput('=')"
                     />
                   </div>
                 </div>
@@ -73,10 +71,12 @@
           </q-card>
         </div>
       </div>
-      <div>numericExpression = {{ keyInput.numericExpression.value }}</div>
-      <div>displaySentence = {{ displayResultComp }}</div>
-      <div>displayResult = {{ displaySentenceComp }}</div>
-      <div>historyResults = {{ keyInput.historyResults.value }}</div>
+      <div>displayResult = {{ displayResultComp }}</div>
+      <div>historyResults = {{ historyResultsComp }}</div>
+      <div>operatorInputFlag = {{ operatorInputFlagComp }}</div>
+      <div>displaySentence = {{ displaySentenceComp }}</div>
+      <div>numericExpression = {{ numericExpressionComp }}</div>
+
     </div>
   </q-page>
 </template>
@@ -85,10 +85,13 @@
   import enumBtnKeysCalc from '../types/enumBtnKeysCalc'
   import KeyInput from '../models/KeysInputs'
   import CheckInput from '../utils/CheckerInputs'
-  import HistoryComponent from '../components/HistoryComponent.vue'
-  import { PropType } from 'vue'
   import KeyboardComponent from 'src/components/KeyboardComponent.vue'
-  import MainCalculator from 'src/models/Main'
+  import DisplayComponent from 'src/components/DisplayComponent.vue'
+  import HistoryComponent from '../components/HistoryComponent.vue'
+  import { computed, PropType, ref } from 'vue'
+
+  const keyInput = new KeyInput()
+  const checkerInput = new CheckInput()
 
   const props = defineProps({
     enumKeysArrayPage: {
@@ -97,19 +100,39 @@
     },
   })
 
-  const mainInstance = new MainCalculator()
-  const keyInput = new KeyInput()
-  const checkerInput = new CheckInput()
+  const inputBtn = ref('')
 
-  let displayResultComp = mainInstance.displayResult
-  let displaySentenceComp = mainInstance.displaySentence
+  const displaySentenceComp = computed(() => {
+    return keyInput.displaySentence.value
+  })
+
+  const displayResultComp = computed(() => {
+    return keyInput.displayResult.value
+  })
+
+  const historyResultsComp = computed(() => {
+    return keyInput.historyResults.value
+  })
+
+  const operatorInputFlagComp = computed(() => {
+    return keyInput.operatorInputFlag
+  })
+
+  const numericExpressionComp = computed(() => {
+    return keyInput.numericExpression.value
+  })
 
   const actionKeyInput = (inputKey: any) => {
     keyInput.KeyInput(inputKey)
-    console.log('>>>>>Input KEY', inputKey)
-    console.log('>>>>>displaySentence', keyInput.displaySentence.value)
-    console.log('>>>>>displayResult', keyInput.displayResult.value)
+    console.log('>>>>> Input Key ', inputKey)
+    console.log('>>>>> Check Input ', checkerInput.CheckInput(inputKey))
+    console.log('>>>>> Display Sentence', keyInput.displaySentence.value)
+    console.log('>>>>> Display Result', keyInput.displayResult.value)
+    console.log('>>>>> Numeric Expression', keyInput.numericExpression.value)
+    console.log('>>>>> Input Flag', keyInput.operatorInputFlag)
+
   }
+
 
   const inputKeyIs = (inputBtn: string) => {
     return checkerInput.CheckInput(inputBtn) === 'isNumber'

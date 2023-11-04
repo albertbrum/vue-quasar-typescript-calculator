@@ -1,0 +1,37 @@
+import { Ref, ref } from 'vue'
+import MainCalculator from './Main'
+import KeysInputs from './KeysInputs'
+
+export default class DisplayOutput extends MainCalculator {
+  public displaySentenceOutput: Ref<string> = ref('')
+
+  public setDisplay(handlerSentence: Ref<string>, operatorInputFlag: boolean): KeysInputs {
+    // Atribua o valor da variável handlerSentence à propriedade displaySentence
+    this.displaySentence.value = handlerSentence.value
+
+    // Atribua o valor da variável operatorInputFlag à propriedade operatorInputFlag
+    this.operatorInputFlag = operatorInputFlag
+
+    // Retorne um objeto com as propriedades corretas
+    return {
+      operatorInputFlag: this.operatorInputFlag,
+      displaySentence: this.displaySentence,
+      displayResult: this.displayResult,
+      historyResults: this.historyResults,
+      numericExpression: this.numericExpression,
+      inputBtn: this.inputBtn
+      'KeysInputs': checkInput, displayOutput, KeyInput
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+

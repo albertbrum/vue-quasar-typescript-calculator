@@ -1,0 +1,39 @@
+import { re } from 'mathjs'
+import DisplayOutput from './DisplayOutput'
+import MainCalculator from './Main'
+import { ref, Ref } from 'vue'
+
+export default class DataHandler extends MainCalculator {
+  public displayOutput: DisplayOutput = new DisplayOutput()
+  public handlerSentence: Ref<string> = ref('')
+  public displaySentence: Ref<string> = ref('')
+
+  public handlerNumber(inputBtn: string): any {
+    this.handlerSentence.value = `${this.handlerSentence.value}${inputBtn}`
+    this.operatorInputFlag = false
+    this.displayOutput.setDisplay(this.handlerSentence, this.operatorInputFlag)
+    return this.handlerSentence.value, this.displaySentence.value
+  }
+  public handlerOperator(inputBtn: string): void {
+    if (inputBtn === '%') {
+      if (this.handlerSentence.value !== '') {
+        this.handlerSentence.value = `${parseFloat(this.handlerSentence.value) / 100}`
+        this.displayOutput.setDisplay(this.handlerSentence, this.operatorInputFlag)
+      }
+    } else if (inputBtn === '.') {
+      if (this.handlerSentence.value.indexOf('.') === -1) {
+        this.handlerSentence.value = `${this.handlerSentence}${inputBtn}`
+        this.displayOutput.setDisplay(this.handlerSentence, this.operatorInputFlag)
+      }
+    } else {
+      if (!this.operatorInputFlag) {
+        this.numericExpression.value += `${this.handlerSentence} ${inputBtn} `
+        this.handlerSentence.value = ''
+        this.operatorInputFlag = true
+        this.displayOutput.setDisplay(this.handlerSentence, this.operatorInputFlag)
+      }
+    }
+  }
+  public handlerClear(inputBtn: string): void {}
+  public handlerResult(result: string): void {}
+}
