@@ -20,7 +20,12 @@
                         style="height: 100px; max-width: 300px"
                       >
                         <q-card-section>
-                          <HistoryComponent :expressions="historyResultsComp" />
+                          <HistoryComponent
+  :expressions="historyResultsComp"
+  
+>
+
+</HistoryComponent>
 
                         </q-card-section>
                       </q-scroll-area>
