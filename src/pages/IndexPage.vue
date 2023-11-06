@@ -20,13 +20,8 @@
                         style="height: 100px; max-width: 300px"
                       >
                         <q-card-section>
-                          <HistoryComponent
-  :expressions="historyResultsComp"
-  
->
-
-</HistoryComponent>
-
+                          <HistoryComponent :expressions="historyResultsComp" />
+                          <span v-if="historyResultsComp.length === 1">Sem Histórico</span>
                         </q-card-section>
                       </q-scroll-area>
                     </q-card>
@@ -35,10 +30,9 @@
               </div>
             </q-card-section>
             <DisplayComponent
-            :display-result-comp="keyInput.displayResult.value"
-            :display-sentence-comp="keyInput.numericExpression.value + keyInput.displaySentence.value"
+              :display-result-comp="displayResultComp"
+              :display-sentence-comp="numericExpressionComp + displaySentenceComp"
             />
-
             <div>
               <q-card-section class="bg-grey-4">
                 <div class="row q-col-gutter-sm">
@@ -51,7 +45,7 @@
                       :enumKeysArray="enumKeysArrayPage"
                       :textColorButton="inputKeyIs(btn) ? 'indigo' : 'white'"
                       :color-button="inputKeyIs(btn) ? 'grey-2' : 'indigo'"
-                      @click="actionKeyInput(inputBtn = btn)"
+                      @click="actionKeyInput((inputBtn = btn))"
                       :inputBtn="btn"
                     />
                   </div>
@@ -76,12 +70,6 @@
           </q-card>
         </div>
       </div>
-      <div>displayResult = {{ displayResultComp }}</div>
-      <div>historyResults = {{ historyResultsComp }}</div>
-      <div>operatorInputFlag = {{ operatorInputFlagComp }}</div>
-      <div>displaySentence = {{ displaySentenceComp }}</div>
-      <div>numericExpression = {{ numericExpressionComp }}</div>
-
     </div>
   </q-page>
 </template>
@@ -129,15 +117,7 @@
 
   const actionKeyInput = (inputKey: any) => {
     keyInput.KeyInput(inputKey)
-    console.log('>>>>> Input Key ', inputKey)
-    console.log('>>>>> Check Input ', checkerInput.CheckInput(inputKey))
-    console.log('>>>>> Display Sentence', keyInput.displaySentence.value)
-    console.log('>>>>> Display Result', keyInput.displayResult.value)
-    console.log('>>>>> Numeric Expression', keyInput.numericExpression.value)
-    console.log('>>>>> Input Flag', keyInput.operatorInputFlag)
-
   }
-
 
   const inputKeyIs = (inputBtn: string) => {
     return checkerInput.CheckInput(inputBtn) === 'isNumber'

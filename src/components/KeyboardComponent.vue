@@ -3,7 +3,6 @@
     class="full-width text-h6"
     :color="props.colorButton"
     :text-color="props.textColorButton"
-
   >
     {{ props.inputBtn }}
   </q-btn>
@@ -16,7 +15,6 @@
     colorButton: String,
     textColorButton: String,
     inputBtn: String,
-
   })
 </script>
 

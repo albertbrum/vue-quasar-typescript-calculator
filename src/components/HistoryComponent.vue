@@ -1,9 +1,11 @@
 <template>
-  <div
-    v-for="(expression, index) in props.expressions"
-    :key="index"
-  >
-    {{ expression }}
+  <div>
+    <div
+      v-for="(list, index) in props.expressions"
+      :key="index"
+    >
+      {{ list }}
+    </div>
   </div>
 </template>
 
